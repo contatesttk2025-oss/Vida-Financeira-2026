@@ -292,6 +292,25 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-he
   </div>
 </div>
 
+
+<!-- ═══ ACESSO NEGADO ═══ -->
+<div id="blockedScreen" style="display:none;align-items:center;justify-content:center;min-height:100vh;padding:24px;">
+  <div style="background:#16181C;border:1px solid rgba(226,75,74,0.3);border-radius:14px;padding:36px 32px;width:100%;max-width:400px;text-align:center;">
+    <div style="font-size:48px;margin-bottom:16px;">🔒</div>
+    <div style="font-size:20px;font-weight:800;color:#FFFFFF;margin-bottom:10px;">Acesso não autorizado</div>
+    <div style="font-size:14px;color:#FFFFFF;line-height:1.6;margin-bottom:24px;">
+      Este app é exclusivo para clientes. Para adquirir o acesso, entre em contato ou realize a compra.<br><br>
+      <strong style="color:#2ECC8F;" id="blockedEmail"></strong>
+    </div>
+    <a id="buyLink" href="#" target="_blank" style="display:inline-block;background:#2ECC8F;color:#0E0F11;font-weight:800;font-family:Syne,sans-serif;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:15px;margin-bottom:14px;">
+      Quero adquirir o acesso
+    </a>
+    <div style="margin-top:14px;">
+      <button onclick="doLogout()" style="background:transparent;border:none;color:#E24B4A;font-size:13px;font-weight:700;cursor:pointer;font-family:Syne,sans-serif;">Sair da conta</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ APP ═══ -->
 <div id="appScreen">
   <div class="header">
@@ -579,6 +598,8 @@ window.doLogout = async () => {
   if(unsubscribe) unsubscribe();
   await signOut(auth);
 };
+// expor showScreen globalmente para o botão da tela de bloqueio
+window.doLogout = window.doLogout;
 
 // ── Firestore helpers ──
 function userDocRef(){ return doc(db, 'users', uid); }
@@ -655,23 +676,51 @@ function getTotals(){
 }
 
 // ── Auth state observer ──
+// URL de compra — troque pelo seu link da Kiwify
+const BUY_URL = 'https://kiwify.com.br/seu-produto';
+
+async function checkAuthorized(email) {
+  try {
+    const snap = await getDoc(doc(db, 'authorized_emails', email));
+    return snap.exists() && snap.data().active === true;
+  } catch(e) {
+    console.error('Erro ao verificar acesso:', e);
+    return false;
+  }
+}
+
+function showScreen(name) {
+  ['loadingScreen','authScreen','blockedScreen','appScreen'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+  const target = document.getElementById(name);
+  if(target) target.style.display = (name === 'loadingScreen') ? 'flex' : (name === 'authScreen' || name === 'blockedScreen') ? 'flex' : 'block';
+}
+
 onAuthStateChanged(auth, async (user) => {
   if(user){
     uid = user.uid;
-    document.getElementById('loadingScreen').style.display = 'flex';
-    document.getElementById('authScreen').style.display = 'none';
-    document.getElementById('appScreen').style.display = 'none';
+    showScreen('loadingScreen');
+
+    const authorized = await checkAuthorized(user.email);
+
+    if(!authorized) {
+      uid = null;
+      document.getElementById('blockedEmail').textContent = user.email;
+      document.getElementById('buyLink').href = BUY_URL;
+      showScreen('blockedScreen');
+      return;
+    }
+
     await loadUserData();
     document.getElementById('userBadge').textContent = user.displayName || user.email;
     buildMonthSelector();
     renderResumo();
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.getElementById('appScreen').style.display = 'block';
+    showScreen('appScreen');
   } else {
     uid = null; userData = {};
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.getElementById('authScreen').style.display = 'flex';
-    document.getElementById('appScreen').style.display = 'none';
+    showScreen('authScreen');
   }
 });
 
