@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Minhas Finanças 2026 — Tome o controle do seu dinheiro</title>
+<meta name="description" content="O app que vai transformar sua relação com o dinheiro. Controle total, metas, relatórios e sincronização em todos os dispositivos. Por apenas R$ 47."/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Cabinet+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#08090B;
+  --bg2:#0F1114;
+  --bg3:#15181E;
+  --green:#00E87A;
+  --green2:#00C968;
+  --text:#FFFFFF;
+  --text2:rgba(255,255,255,0.65);
+  --text3:rgba(255,255,255,0.35);
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(0,232,122,0.25);
+}
+
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cabinet Grotesk',sans-serif;
+  background:var(--bg);color:var(--text);
+  overflow-x:hidden;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:0.4;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  padding:18px 40px;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(8,9,11,0.8);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;letter-spacing:-0.5px;}
+.nav-logo span{color:var(--green);}
+.nav-cta{
+  background:var(--green);color:#08090B;
+  font-size:13px;font-weight:800;padding:10px 22px;
+  border-radius:100px;border:none;cursor:pointer;
+  font-family:'Cabinet Grotesk',sans-serif;
+  transition:all 0.2s;text-decoration:none;
+}
+.nav-cta:hover{background:#fff;transform:scale(1.03);}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:120px 24px 80px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;top:20%;left:50%;transform:translateX(-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle, rgba(0,232,122,0.12) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;bottom:-100px;left:-100px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle, rgba(0,232,122,0.05) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,232,122,0.1);border:1px solid var(--border2);
+  border-radius:100px;padding:6px 16px;font-size:12px;font-weight:700;
+  color:var(--green);letter-spacing:0.5px;text-transform:uppercase;
+  margin-bottom:28px;animation:fadeUp 0.6s ease both;
+}
+.hero-badge::before{content:'✦';font-size:10px;}
+h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(40px,8vw,88px);
+  font-weight:800;line-height:1.0;
+  letter-spacing:-3px;
+  margin-bottom:24px;
+  animation:fadeUp 0.7s 0.1s ease both;
+}
+h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,var(--green),#00B8FF);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-size:clamp(16px,2.5vw,20px);color:var(--text2);
+  max-width:560px;line-height:1.6;margin-bottom:48px;
+  animation:fadeUp 0.7s 0.2s ease both;
+}
+.hero-cta-group{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  animation:fadeUp 0.7s 0.3s ease both;
+}
+.btn-main{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--green);color:#08090B;
+  font-size:17px;font-weight:800;padding:18px 42px;
+  border-radius:100px;border:none;cursor:pointer;
+  font-family:'Cabinet Grotesk',sans-serif;
+  transition:all 0.25s;text-decoration:none;
+  box-shadow:0 0 40px rgba(0,232,122,0.3);
+}
+.btn-main:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 60px rgba(0,232,122,0.5);}
+.btn-main .arrow{transition:transform 0.2s;}
+.btn-main:hover .arrow{transform:translateX(4px);}
+.hero-guarantee{font-size:12px;color:var(--text3);display:flex;align-items:center;gap:6px;}
+.hero-guarantee::before{content:'🔒';}
+
+/* ── HERO MOCKUP ── */
+.hero-mockup{
+  margin-top:70px;position:relative;
+  animation:fadeUp 0.8s 0.4s ease both;
+  max-width:860px;width:100%;
+}
+.mockup-frame{
+  background:var(--bg2);border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+}
+.mockup-bar{
+  background:var(--bg3);padding:12px 16px;
+  display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);
+}
+.mockup-dot{width:10px;height:10px;border-radius:50%;}
+.mockup-content{padding:24px;}
+.mock-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.mock-metric{background:var(--bg3);border-radius:10px;padding:12px 14px;border:1px solid var(--border);}
+.mock-m-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;font-weight:700;}
+.mock-m-val{font-size:16px;font-weight:800;font-family:'Syne',monospace;}
+.mock-bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mock-card{background:var(--bg3);border-radius:10px;padding:14px;border:1px solid var(--border);}
+.mock-card-title{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;font-weight:700;}
+.mock-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.mock-bar-label{font-size:11px;color:var(--text2);width:70px;}
+.mock-bar-track{flex:1;background:rgba(255,255,255,0.06);border-radius:3px;height:5px;overflow:hidden;}
+.mock-bar-fill{height:100%;border-radius:3px;}
+.mock-bar-val{font-size:10px;color:var(--text2);width:45px;text-align:right;font-family:monospace;}
+.mock-prog{margin-bottom:10px;}
+.mock-prog-head{display:flex;justify-content:space-between;margin-bottom:5px;}
+.mock-prog-name{font-size:11px;color:var(--text2);}
+.mock-prog-pct{font-size:11px;color:var(--green);font-weight:700;}
+.mock-prog-track{background:rgba(255,255,255,0.06);border-radius:3px;height:5px;overflow:hidden;}
+.mock-prog-fill{height:100%;border-radius:3px;background:var(--green);}
+
+/* ── SOCIAL PROOF ── */
+.social-strip{
+  padding:24px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;
+}
+.social-item{display:flex;align-items:center;gap:10px;}
+.social-num{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--green);}
+.social-label{font-size:13px;color:var(--text2);}
+
+/* ── SECTIONS ── */
+section{padding:100px 24px;}
+.section-inner{max-width:1080px;margin:0 auto;}
+.section-tag{
+  font-size:11px;font-weight:700;color:var(--green);
+  text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px;display:block;
+}
+h2{
+  font-family:'Syne',sans-serif;font-size:clamp(30px,5vw,52px);
+  font-weight:800;line-height:1.1;letter-spacing:-1.5px;margin-bottom:20px;
+}
+h2 span{color:var(--green);}
+.section-sub{font-size:18px;color:var(--text2);line-height:1.6;max-width:560px;margin-bottom:60px;}
+
+/* ── PROBLEMA ── */
+.problema-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;
+}
+.problema-item{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:16px;padding:24px;
+  transition:border-color 0.2s;
+}
+.problema-item:hover{border-color:rgba(255,255,255,0.15);}
+.problema-emoji{font-size:28px;margin-bottom:12px;}
+.problema-title{font-size:16px;font-weight:800;margin-bottom:8px;}
+.problema-text{font-size:14px;color:var(--text2);line-height:1.5;}
+
+/* ── FEATURES ── */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+.feature-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:20px;padding:28px;position:relative;overflow:hidden;
+  transition:all 0.3s;
+}
+.feature-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--green),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.feature-card:hover{border-color:var(--border2);transform:translateY(-4px);}
+.feature-card:hover::before{opacity:1;}
+.feature-icon{
+  width:48px;height:48px;background:rgba(0,232,122,0.1);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:16px;
+  border:1px solid rgba(0,232,122,0.2);
+}
+.feature-title{font-size:17px;font-weight:800;margin-bottom:8px;}
+.feature-text{font-size:14px;color:var(--text2);line-height:1.6;}
+
+/* ── COMO FUNCIONA ── */
+.steps{display:flex;flex-direction:column;gap:0;max-width:640px;margin:0 auto;}
+.step{display:flex;gap:24px;align-items:flex-start;position:relative;padding-bottom:40px;}
+.step:last-child{padding-bottom:0;}
+.step:not(:last-child)::after{
+  content:'';position:absolute;left:20px;top:48px;bottom:0;
+  width:1px;background:linear-gradient(to bottom,var(--border2),transparent);
+}
+.step-num{
+  width:42px;height:42px;border-radius:50%;flex-shrink:0;
+  background:rgba(0,232,122,0.1);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--green);
+}
+.step-content{}
+.step-title{font-size:18px;font-weight:800;margin-bottom:6px;}
+.step-text{font-size:14px;color:var(--text2);line-height:1.6;}
+
+/* ── COMPARAÇÃO ── */
+.compare-table{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;max-width:700px;margin:0 auto;
+}
+.compare-header{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  background:var(--bg3);padding:16px 24px;
+  border-bottom:1px solid var(--border);
+}
+.compare-header div{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;}
+.compare-header div:nth-child(2){color:var(--text3);}
+.compare-header div:nth-child(3){color:var(--green);}
+.compare-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  padding:14px 24px;border-bottom:1px solid var(--border);
+  align-items:center;transition:background 0.15s;
+}
+.compare-row:last-child{border-bottom:none;}
+.compare-row:hover{background:rgba(255,255,255,0.02);}
+.compare-feature{font-size:14px;color:var(--text2);}
+.compare-no{font-size:18px;filter:grayscale(1);opacity:0.4;}
+.compare-yes{font-size:18px;color:var(--green);}
+
+/* ── DEPOIMENTOS ── */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.testimonial{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:20px;padding:24px;
+}
+.test-stars{color:#FFB800;font-size:14px;margin-bottom:12px;letter-spacing:2px;}
+.test-text{font-size:15px;color:var(--text);line-height:1.6;margin-bottom:16px;font-style:italic;}
+.test-author{display:flex;align-items:center;gap:12px;}
+.test-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),#00B8FF);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:800;color:#08090B;flex-shrink:0;
+}
+.test-name{font-size:14px;font-weight:700;}
+.test-role{font-size:12px;color:var(--text3);}
+
+/* ── PRICING ── */
+.pricing-box{
+  max-width:480px;margin:0 auto;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:24px;padding:40px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.pricing-box::before{
+  content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,232,122,0.15),transparent 70%);
+  pointer-events:none;
+}
+.pricing-tag{
+  display:inline-block;background:rgba(0,232,122,0.15);
+  color:var(--green);font-size:11px;font-weight:800;
+  text-transform:uppercase;letter-spacing:1px;
+  padding:5px 14px;border-radius:100px;margin-bottom:20px;
+  border:1px solid var(--border2);
+}
+.pricing-name{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:6px;}
+.pricing-desc{font-size:14px;color:var(--text2);margin-bottom:28px;}
+.pricing-old{font-size:16px;color:var(--text3);text-decoration:line-through;margin-bottom:4px;}
+.pricing-price{
+  font-family:'Syne',sans-serif;font-size:64px;font-weight:800;
+  color:var(--green);line-height:1;letter-spacing:-3px;margin-bottom:6px;
+}
+.pricing-once{font-size:14px;color:var(--text2);margin-bottom:32px;}
+.pricing-features{list-style:none;margin-bottom:32px;text-align:left;}
+.pricing-features li{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0;border-bottom:1px solid var(--border);
+  font-size:14px;color:var(--text2);
+}
+.pricing-features li:last-child{border-bottom:none;}
+.pricing-features li::before{content:'✓';color:var(--green);font-weight:800;flex-shrink:0;}
+.btn-buy{
+  display:block;width:100%;
+  background:var(--green);color:#08090B;
+  font-size:17px;font-weight:800;padding:18px;
+  border-radius:100px;border:none;cursor:pointer;
+  font-family:'Cabinet Grotesk',sans-serif;
+  transition:all 0.25s;text-decoration:none;
+  box-shadow:0 0 40px rgba(0,232,122,0.3);
+}
+.btn-buy:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(0,232,122,0.5);}
+.pricing-security{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:12px;color:var(--text3);margin-top:16px;
+}
+
+/* ── FAQ ── */
+.faq-list{max-width:640px;margin:0 auto;}
+.faq-item{
+  border-bottom:1px solid var(--border);overflow:hidden;
+}
+.faq-q{
+  width:100%;background:none;border:none;color:var(--text);
+  font-family:'Cabinet Grotesk',sans-serif;font-size:16px;font-weight:700;
+  padding:20px 0;text-align:left;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.faq-q .icon{
+  width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.06);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:14px;transition:transform 0.3s,background 0.2s;
+}
+.faq-item.open .faq-q .icon{transform:rotate(45deg);background:rgba(0,232,122,0.15);color:var(--green);}
+.faq-a{
+  font-size:14px;color:var(--text2);line-height:1.7;
+  max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s;
+}
+.faq-item.open .faq-a{max-height:200px;padding-bottom:20px;}
+
+/* ── CTA FINAL ── */
+.cta-final{
+  padding:100px 24px;text-align:center;
+  background:linear-gradient(to bottom,var(--bg),rgba(0,232,122,0.04),var(--bg));
+  position:relative;
+}
+.cta-final h2{font-size:clamp(32px,5vw,56px);letter-spacing:-2px;}
+
+/* ── FOOTER ── */
+footer{
+  padding:30px 40px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.footer-logo{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;}
+.footer-logo span{color:var(--green);}
+.footer-copy{font-size:12px;color:var(--text3);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  nav{padding:16px 20px;}
+  .social-strip{gap:24px;padding:20px;}
+  .mock-metrics{grid-template-columns:repeat(2,1fr);}
+  .mock-bottom{grid-template-columns:1fr;}
+  .compare-table{font-size:13px;}
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Minhas <span>Finanças</span></div>
+  <a href="#pricing" class="nav-cta">Quero o acesso — R$ 47</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-badge">Novo ✦ Minhas Finanças 2026</div>
+  <h1>Pare de <em>perder dinheiro</em> sem saber por quê.</h1>
+  <p class="hero-sub">O app completo que coloca você no controle total das suas finanças — com metas, relatórios, limites e sincronização em qualquer dispositivo.</p>
+  <div class="hero-cta-group">
+    <a href="#pricing" class="btn-main">
+      Quero o acesso agora <span class="arrow">→</span>
+    </a>
+    <span class="hero-guarantee">Pagamento único de R$ 47 — sem mensalidade</span>
+  </div>
+
+  <div class="hero-mockup">
+    <div class="mockup-frame">
+      <div class="mockup-bar">
+        <div class="mockup-dot" style="background:#FF5F57"></div>
+        <div class="mockup-dot" style="background:#FEBC2E"></div>
+        <div class="mockup-dot" style="background:#28C840"></div>
+        <div style="flex:1;background:rgba(255,255,255,0.05);border-radius:6px;height:20px;margin-left:8px;"></div>
+      </div>
+      <div class="mockup-content">
+        <div class="mock-metrics">
+          <div class="mock-metric"><div class="mock-m-label">Renda total</div><div class="mock-m-val" style="color:#4B8EF0">R$ 4.200</div></div>
+          <div class="mock-metric"><div class="mock-m-label">Total gasto</div><div class="mock-m-val" style="color:#E24B4A">R$ 2.810</div></div>
+          <div class="mock-metric"><div class="mock-m-label">Reservar</div><div class="mock-m-val" style="color:#F0A500">R$ 840</div></div>
+          <div class="mock-metric"><div class="mock-m-label">Livre p/ gastar</div><div class="mock-m-val" style="color:#00E87A">R$ 550</div></div>
+        </div>
+        <div class="mock-bottom">
+          <div class="mock-card">
+            <div class="mock-card-title">Gastos por categoria</div>
+            <div class="mock-bar-row"><span class="mock-bar-label">Moradia</span><div class="mock-bar-track"><div class="mock-bar-fill" style="width:80%;background:#4B8EF0"></div></div><span class="mock-bar-val">R$ 1.200</span></div>
+            <div class="mock-bar-row"><span class="mock-bar-label">Alimentação</span><div class="mock-bar-track"><div class="mock-bar-fill" style="width:55%;background:#00E87A"></div></div><span class="mock-bar-val">R$ 820</span></div>
+            <div class="mock-bar-row"><span class="mock-bar-label">Transporte</span><div class="mock-bar-track"><div class="mock-bar-fill" style="width:35%;background:#F0A500"></div></div><span class="mock-bar-val">R$ 390</span></div>
+            <div class="mock-bar-row"><span class="mock-bar-label">Lazer</span><div class="mock-bar-track"><div class="mock-bar-fill" style="width:27%;background:#9B7EF0"></div></div><span class="mock-bar-val">R$ 400</span></div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-card-title">Minhas metas</div>
+            <div class="mock-prog"><div class="mock-prog-head"><span class="mock-prog-name">🏖️ Viagem</span><span class="mock-prog-pct">68%</span></div><div class="mock-prog-track"><div class="mock-prog-fill" style="width:68%"></div></div></div>
+            <div class="mock-prog"><div class="mock-prog-head"><span class="mock-prog-name">📱 iPhone</span><span class="mock-prog-pct">42%</span></div><div class="mock-prog-track"><div class="mock-prog-fill" style="width:42%;background:#4B8EF0"></div></div></div>
+            <div class="mock-prog"><div class="mock-prog-head"><span class="mock-prog-name">🏠 Reserva</span><span class="mock-prog-pct">91%</span></div><div class="mock-prog-track"><div class="mock-prog-fill" style="width:91%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<div class="social-strip reveal">
+  <div class="social-item"><span class="social-num">100%</span><span class="social-label">online, sem instalar</span></div>
+  <div class="social-item"><span class="social-num">R$ 47</span><span class="social-label">pagamento único</span></div>
+  <div class="social-item"><span class="social-num">∞</span><span class="social-label">dispositivos sincronizados</span></div>
+  <div class="social-item"><span class="social-num">0</span><span class="social-label">mensalidade</span></div>
+</div>
+
+<!-- PROBLEMA -->
+<section>
+  <div class="section-inner">
+    <span class="section-tag reveal">Você se identifica?</span>
+    <h2 class="reveal">Você sabe quanto <span>ganhou</span> esse mês.<br>Mas onde foi <span>parar</span>?</h2>
+    <p class="section-sub reveal">A maioria das pessoas não tem uma resposta clara. E é exatamente isso que drena seu dinheiro sem você perceber.</p>
+    <div class="problema-grid">
+      <div class="problema-item reveal"><div class="problema-emoji">😰</div><div class="problema-title">Fim do mês no vermelho</div><div class="problema-text">O salário entra, as contas chegam e sobra quase nada. Mas você nem sabe onde gastou tanto.</div></div>
+      <div class="problema-item reveal"><div class="problema-emoji">📊</div><div class="problema-title">Planilhas que ninguém usa</div><div class="problema-text">Você cria uma planilha linda, usa por dois dias e abandona. Precisa de algo mais prático.</div></div>
+      <div class="problema-item reveal"><div class="problema-emoji">🎯</div><div class="problema-title">Metas que não saem do papel</div><div class="problema-text">Quer fazer uma viagem, juntar para uma reserva, mas nunca sabe quanto realmente guardou.</div></div>
+      <div class="problema-item reveal"><div class="problema-emoji">📱</div><div class="problema-title">Apps caros com mensalidade</div><div class="problema-text">Os apps bons cobram R$ 20, R$ 30 por mês. No final do ano, gastou mais com o app do que economizou.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <span class="section-tag reveal">O que você leva</span>
+    <h2 class="reveal">Tudo que você precisa,<br><span>nada que você não precisa.</span></h2>
+    <p class="section-sub reveal">Simples de usar, poderoso o suficiente para transformar sua vida financeira.</p>
+    <div class="features-grid">
+      <div class="feature-card reveal"><div class="feature-icon">📊</div><div class="feature-title">Dashboard completo</div><div class="feature-text">Veja em segundos quanto entrou, quanto saiu, quanto pode gastar e quanto está guardando — tudo numa tela só.</div></div>
+      <div class="feature-card reveal"><div class="feature-icon">🎯</div><div class="feature-title">Metas de economia</div><div class="feature-text">Crie objetivos com valor e acompanhe o progresso. Viagem, reserva, compra planejada — saiba exatamente onde você está.</div></div>
+      <div class="feature-card reveal"><div class="feature-icon">🚦</div><div class="feature-title">Limites por categoria</div><div class="feature-text">Define quanto quer gastar em alimentação, lazer, transporte. O app te avisa quando estiver chegando no limite.</div></div>
+      <div class="feature-card reveal"><div class="feature-icon">🐷</div><div class="feature-title">Cofre de poupança</div><div class="feature-text">Registre quanto guardou cada mês e veja seu dinheiro acumulando. Total histórico sempre visível.</div></div>
+      <div class="feature-card reveal"><div class="feature-icon">📈</div><div class="feature-title">Relatórios visuais</div><div class="feature-text">Gráficos simples e bonitos mostrando onde você mais gasta e como evoluiu nos últimos 6 meses.</div></div>
+      <div class="feature-card reveal"><div class="feature-icon">💡</div><div class="feature-title">Dicas personalizadas</div><div class="feature-text">O app analisa seus dados e sugere onde cortar gastos. Inteligente, direto ao ponto.</div></div>
+      <div class="feature-card reveal"><div class="feature-icon">☁️</div><div class="feature-title">Sincronização em nuvem</div><div class="feature-text">Registrou no celular, aparece no computador. Seus dados seguros e sempre atualizados em qualquer dispositivo.</div></div>
+      <div class="feature-card reveal"><div class="feature-icon">⚡</div><div class="feature-title">Rápido e intuitivo</div><div class="feature-text">Registrar um gasto leva menos de 5 segundos. Feito para ser usado de verdade, todo dia, sem esforço.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section>
+  <div class="section-inner" style="text-align:center;">
+    <span class="section-tag reveal">Simples assim</span>
+    <h2 class="reveal">Começa a usar em <span>3 minutos.</span></h2>
+    <p class="section-sub reveal" style="margin:0 auto 60px;">Sem instalação, sem configuração complicada. É só acessar e começar.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <div class="step-content"><div class="step-title">Compre o acesso</div><div class="step-text">Pagamento único via cartão ou Pix. Você recebe o acesso por e-mail na hora.</div></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <div class="step-content"><div class="step-title">Crie sua conta</div><div class="step-text">Acesse o app, crie sua conta com o e-mail que usou na compra e já entra.</div></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <div class="step-content"><div class="step-title">Configure sua renda</div><div class="step-text">Coloque seu salário, defina sua meta de economia e pronto — o app começa a trabalhar por você.</div></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <div class="step-content"><div class="step-title">Registre e acompanhe</div><div class="step-text">Cada gasto em segundos. Cada extra que entrar, você registra na hora. O resumo sempre atualizado.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARAÇÃO -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner" style="text-align:center;">
+    <span class="section-tag reveal">Por que escolher</span>
+    <h2 class="reveal">Vs. outras <span>opções</span></h2>
+    <p class="section-sub reveal" style="margin:0 auto 50px;">Compare e veja por que faz sentido.</p>
+    <div class="compare-table reveal">
+      <div class="compare-header">
+        <div>Recurso</div>
+        <div>Apps com mensalidade</div>
+        <div>Minhas Finanças 2026</div>
+      </div>
+      <div class="compare-row"><div class="compare-feature">Sem mensalidade</div><div class="compare-no">✗</div><div class="compare-yes">✓</div></div>
+      <div class="compare-row"><div class="compare-feature">Sincronização em nuvem</div><div class="compare-no">✗</div><div class="compare-yes">✓</div></div>
+      <div class="compare-row"><div class="compare-feature">Metas de economia</div><div class="compare-no">✗</div><div class="compare-yes">✓</div></div>
+      <div class="compare-row"><div class="compare-feature">Limites por categoria</div><div class="compare-no">✗</div><div class="compare-yes">✓</div></div>
+      <div class="compare-row"><div class="compare-feature">Cofre de poupança</div><div class="compare-no">✗</div><div class="compare-yes">✓</div></div>
+      <div class="compare-row"><div class="compare-feature">Relatórios e gráficos</div><div class="compare-no">✗</div><div class="compare-yes">✓</div></div>
+      <div class="compare-row"><div class="compare-feature">Dicas personalizadas</div><div class="compare-no">✗</div><div class="compare-yes">✓</div></div>
+      <div class="compare-row"><div class="compare-feature">Acesso vitalício</div><div class="compare-no">✗</div><div class="compare-yes">✓</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section>
+  <div class="section-inner">
+    <span class="section-tag reveal">O que dizem</span>
+    <h2 class="reveal">Quem usou, <span>não larga mais.</span></h2>
+    <p class="section-sub reveal">Resultados reais de pessoas reais.</p>
+    <div class="testimonials">
+      <div class="testimonial reveal">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Finalmente entendi para onde ia meu dinheiro. Em 3 meses já juntei para a minha viagem que eu adiava há 2 anos."</p>
+        <div class="test-author"><div class="test-avatar">A</div><div><div class="test-name">Ana Paula</div><div class="test-role">Designer, 28 anos</div></div></div>
+      </div>
+      <div class="testimonial reveal">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Uso no celular e no notebook ao mesmo tempo. Registrei um gasto no ônibus e quando cheguei em casa já tava lá. Incrível."</p>
+        <div class="test-author"><div class="test-avatar">R</div><div><div class="test-name">Rafael Mendes</div><div class="test-role">Autônomo, 34 anos</div></div></div>
+      </div>
+      <div class="testimonial reveal">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Tentei mil planilhas e apps caros. Esse aqui é diferente: simples, bonito e sem cobrar todo mês. Valeu muito os R$ 47."</p>
+        <div class="test-author"><div class="test-avatar">C</div><div><div class="test-name">Camila Torres</div><div class="test-role">Professora, 31 anos</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner" style="text-align:center;">
+    <span class="section-tag reveal">Investimento</span>
+    <h2 class="reveal">Uma vez só. <span>Para sempre.</span></h2>
+    <p class="section-sub reveal" style="margin:0 auto 50px;">Sem surpresas, sem renovação automática, sem pegadinha.</p>
+    <div class="pricing-box reveal">
+      <div class="pricing-tag">✦ Acesso Vitalício</div>
+      <div class="pricing-name">Minhas Finanças 2026</div>
+      <div class="pricing-desc">Tudo que você precisa para organizar suas finanças de uma vez por todas.</div>
+      <div class="pricing-old">De R$ 97,00</div>
+      <div class="pricing-price">R$ 47</div>
+      <div class="pricing-once">pagamento único · acesso imediato</div>
+      <ul class="pricing-features">
+        <li>Dashboard financeiro completo</li>
+        <li>Sincronização em nuvem (todos os dispositivos)</li>
+        <li>Metas de economia com progresso</li>
+        <li>Limites por categoria com alertas</li>
+        <li>Cofre de poupança acumulado</li>
+        <li>Relatórios e gráficos mensais</li>
+        <li>Dicas personalizadas baseadas nos seus dados</li>
+        <li>Atualizações inclusas</li>
+      </ul>
+      <a href="https://pay.kiwify.com.br/octajbM" class="btn-buy">Quero meu acesso agora →</a>
+      <div class="pricing-security">🔒 Pagamento seguro via Kiwify</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="section-inner">
+    <span class="section-tag reveal">Dúvidas</span>
+    <h2 class="reveal" style="text-align:center;">Perguntas <span>frequentes</span></h2>
+    <div style="height:50px;"></div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">Precisa instalar algum app? <span class="icon">+</span></button>
+        <div class="faq-a">Não! O Minhas Finanças 2026 funciona diretamente no navegador do seu celular ou computador. Sem instalar nada. E se quiser, pode adicionar na tela inicial como um app normal.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">Meus dados ficam seguros? <span class="icon">+</span></button>
+        <div class="faq-a">Sim. Os dados ficam salvos na sua conta pessoal no Firebase (Google), com criptografia e segurança de nível empresarial. Só você tem acesso às suas informações.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">Funciona no celular e no computador ao mesmo tempo? <span class="icon">+</span></button>
+        <div class="faq-a">Exatamente esse é um dos maiores diferenciais. Você registra um gasto no celular na rua e quando chega em casa e abre no computador já está lá, sincronizado em tempo real.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">É realmente pagamento único? Sem mensalidade? <span class="icon">+</span></button>
+        <div class="faq-a">100% pagamento único. Você paga R$ 47 uma vez e tem acesso para sempre. Sem renovação automática, sem cobrança surpresa, sem mensalidade.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)">Como recebo o acesso após a compra? <span class="icon">+</span></button>
+        <div class="faq-a">Após a confirmação do pagamento, você recebe um e-mail com o link do app. É só criar sua conta com esse mesmo e-mail e já entrar. O processo leva menos de 2 minutos.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <span class="section-tag reveal">Última chance</span>
+  <h2 class="reveal">Seu dinheiro merece<br><span>mais atenção.</span></h2>
+  <p style="font-size:18px;color:var(--text2);margin:20px auto 40px;max-width:480px;line-height:1.6;" class="reveal">Por R$ 47 uma única vez, você tem controle total das suas finanças para sempre. Quanto você perde por mês sem isso?</p>
+  <a href="#pricing" class="btn-main reveal">Quero o acesso agora — R$ 47 <span class="arrow">→</span></a>
+  <p style="font-size:12px;color:var(--text3);margin-top:16px;" class="reveal">Pagamento único · Acesso imediato · Sem mensalidade</p>
+</div>
+
+<footer>
+  <div class="footer-logo">Minhas <span>Finanças</span> 2026</div>
+  <div class="footer-copy">© 2026 · Todos os direitos reservados</div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// FAQ
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
