@@ -4,13 +4,13 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Minhas Finanças</title>
-<link rel="manifest" href="/manifest.json"/>
+<link rel="manifest" href="./manifest.json"/>
 <meta name="theme-color" content="#0E0F11"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Finanças"/>
-<link rel="apple-touch-icon" href="/icon-192.png"/>
+<link rel="apple-touch-icon" href="./icon-192.png"/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -677,7 +677,7 @@ function getTotals(){
 
 // ── Auth state observer ──
 // URL de compra — troque pelo seu link da Kiwify
-const BUY_URL = 'https://kiwify.com.br/seu-produto';
+const BUY_URL = 'https://contatesttk2025-oss.github.io/Vida-Financeira-2026/vendas.html';
 
 async function checkAuthorized(email) {
   try {
@@ -1015,7 +1015,7 @@ window.resetMes=()=>{
 
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js').catch(console.error);
+  navigator.serviceWorker.register('./sw.js').catch(console.error);
 }
 
 </script>
